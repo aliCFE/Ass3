@@ -56,9 +56,15 @@ int main()
         //  selecting  filter
         cin >> input1;
 
-
+        // if select = 1  (Black & White)
+        if (input1 == "1"){
+            loadImage();
+            Black_White();
+            saveImage();
+            break;
+        }
         // if select = 2 (invert)
-        if (input1 == "2"){
+          else if (input1 == "2"){
             loadImage();
             Invert();
             saveImage();
@@ -71,6 +77,14 @@ int main()
             saveImage();
             break;
         }
+            // if select = 4 (flip)
+        else if (input1 == "4"){
+            loadImage();
+            flip();
+            saveImage();
+            break;
+
+        }
             // if select = 5 (mirror)
         else if (input1 == "5"){
             loadImage();
@@ -78,7 +92,13 @@ int main()
             saveImage();
             break;
         }
-
+            // if select = 6 (brightness)
+        else if (input1 == "6"){
+            loadImage();
+            dark();
+            saveImage();
+            break;
+        }
         // if select = 7 (edges)
         else if (input1 == "7"){
             loadImage();
@@ -87,7 +107,7 @@ int main()
             break;
 
         }
-         // if select = 8 (enlarge)
+        // if select = 8 (enlarge)
         else if (input1 == "8") {
             loadImage();
             enlarge();
@@ -95,6 +115,33 @@ int main()
             break;
         }
 
+            // if select = 9 (shrink)
+        else if (input1 == "9"){
+            loadImage();
+            shrink();
+            saveImage();
+            break;
+
+        }
+            // if select = a (mirror)
+        else if (input1 == "a"){
+            loadImage();
+            Mirror();
+            saveImage();
+            break;
+        }
+
+            // if select = c (blur)
+        else if (input1 == "c"){
+            loadImage();
+            for (int i = 0; i < 5; i++){
+                blur();
+                changeImage();
+            }
+            saveImage();
+            break;
+
+        }
         // if select = b (shuffle)
           else if (input1 == "b"){
             loadImage();
@@ -102,8 +149,6 @@ int main()
             saveImage();
             break;
         }
-
-
 
             // if select = 0 (exit)
         else if (input1 == "0"){
@@ -219,6 +264,7 @@ void rotate90() {
         }
     }
 }
+
 
 
 //edges
@@ -499,6 +545,203 @@ void merger(){
    // using it to merge the image and take the average
             outimage[i][j] = (image1[i][j] + image2[i][j]) / 2;
 
+        }
+    }
+}
+// dark and light
+void dark() {
+    string type;
+    while (true){
+        //ask the user
+        cout << "do you want to make it darker or lighter: ";
+        cin >> type;
+        if (type == "darker" || type == "lighter"){
+            // break the while loop and go on to the for loop
+            break;
+        }
+
+        else{
+            //if taking a valid input
+            cout << "enter a valid input ! " << endl;
+        }
+    }
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j< SIZE; j++) {
+            if (type == "darker"){
+                // subtract 63 from the image
+                outimage[i][j] = image1[i][j] - 63;
+                //if the brightness is < 0.. make it 0
+                if ((image1[i][j] - 63) < 0){
+                    outimage[i][j] = 0;
+                }
+            }
+            else if (type == "lighter"){
+                outimage[i][j] = image1[i][j] + 63;
+                if ((image1[i][j] + 63) > 255){
+                    //if the brightness is > 255.. make it 255
+                    outimage[i][j] = 255;
+                }
+            }
+        }
+    }
+}
+//shrink
+void shrink(){
+    //Shrinking variable
+    string number;
+    int Wtrue;
+    Wtrue = true;
+    //while loop in case of taking a valid input
+    while (Wtrue) {
+        cout << "press \" 4 \" for 1/4... press \" 3 \" for 1/3...press \"2\" for 1/2: ";
+        cin >> number;
+        if (number == "2" || number == "3" || number == "4"){
+            // break the while loop and go on to the for loop
+            break;
+        }
+
+        else {
+            cout << "enter a valid input ! " << endl;
+        }
+    }
+    for (int i = 0; i < SIZE; i+=2) {
+        for (int j = 0; j< SIZE; j+=2) {
+
+            if (number == "2"){
+                // divide i,j by 2 for making the photo to half its real
+                outimage[i/2][j/2] = image1[i][j];
+            }
+            else if (number == "3"){
+                // divide i,j by 3 for making the photo to third its real
+                outimage[i/3][j/3] = image1[i][j];
+            }
+            else if (number == "4"){
+                // divide i,j by 4 for making the photo to quarter its real
+                outimage[i/4][j/4] = image1[i][j];
+            }
+        }
+    }
+}
+//blur
+void blur () {
+    int average = 0;
+    for (int i=0 ; i < SIZE ; i++){
+        for (int j=0 ; j < SIZE ; j++){
+            for (int k = -1; k <= 1; k ++){
+                for (int l = -1; l <= 1 ;l++){
+                    // if condition for not making some edges black
+                    if((i + k) >= 0 && (i + k) <= 255 && (j + l) >= 0 && (j + l) <= 255){
+                        average += image1[i + k][j + l];
+                    }
+                }
+            }
+            outimage[i][j] = (average / 9);
+            // making average = 0 again
+            average = 0;
+        }
+    }
+}
+
+
+// helper function for blur
+void changeImage(){
+    for (int i = 0; i < SIZE; i++){
+        for (int j = 0; j < SIZE; j++){
+            // input image = out image
+            image1[i][j] = outimage[i][j];
+        }
+    }
+}
+// function for black and white
+void Black_White(){
+    // loop into the image
+    for (int i = 0; i < SIZE ; i++){
+        for (int j = 0; j < SIZE ; j++){
+            // making out image =  255 if it is > 127
+            if (image1[i][j] > 127){
+                outimage[i][j] = 255;
+
+            }
+            else {
+                // if it is < 127 make the out image = 0
+                outimage[i][j] = 0;
+            }
+        }
+    }
+}
+
+// function to flip the image
+void flip(){
+    for (int i = 0; i < SIZE ; i++){
+        for (int j = 0; j < SIZE ; j++){
+            //code to flip image
+            outimage[i][j] = image1[SIZE-i][SIZE-j];
+        }
+    }
+}
+
+void Mirror(){
+	cout << "Enter the part you need to mirror (Upper=1 , Lower = 2 Left = 3 ,Right=4) : ";
+	int part;
+	cin >> part;
+
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j< SIZE; j++) {
+            if( i < 128 ){ // upper half
+                upperHalf[i][j] = image1[i][j];
+            }
+            if( i >= 128 ){ // below half
+                downHalf[i][j] = image1[i][j];
+            }
+            if( j < 128 ){ // left half
+                leftHalf[i][j] = image1[i][j];
+            }
+            if( j >= 128 ){ // right half
+                rightHalf[i][j] = image1[i][j];
+            }
+    }
+}
+
+
+  // result image
+
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+
+            if( part == 1 ){
+                if( i < 128 ){ // upper half
+                    outimage[i][j] = upperHalf[i][j];
+                }
+                if( i >= 128 ){ // below half
+                    outimage[i][j] = upperHalf[256-i][j];
+                }
+            }
+            else if( part == 2 ){
+                if( i < 128 ){ // upper half
+                    outimage[i][j] = downHalf[256-i][j];
+                }
+                if( i >= 128 ){ // below half
+                    outimage[i][j] = downHalf[i][j];
+                }
+            }
+            else if( part == 3 ){
+                if( j <= 128 ){ // left half
+                    outimage[i][j] = leftHalf[i][j];
+                }
+
+                if( j > 128 ){ // right half
+                    outimage[i][j] = leftHalf[i][256-j];
+                    }
+                }
+            else if( part == 4 ){
+                if( j < 128 ){ // left half
+                    outimage[i][j] = rightHalf[i][256-j];
+                }
+                if( j >= 128 ){ // right half
+
+                    outimage[i][j] = rightHalf[i][j];
+                }
+            }
         }
     }
 }
