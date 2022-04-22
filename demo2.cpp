@@ -87,6 +87,23 @@ int main()
             break;
 
         }
+         // if select = 8 (enlarge)
+        else if (input1 == "8") {
+            loadImage();
+            enlarge();
+            saveImage();
+            break;
+        }
+
+        // if select = b (shuffle)
+          else if (input1 == "b"){
+            loadImage();
+            Shuffle();
+            saveImage();
+            break;
+        }
+
+
 
             // if select = 0 (exit)
         else if (input1 == "0"){
@@ -249,6 +266,239 @@ void Invert() {
       for (int j = 0; j < SIZE; j++) {
             // subtract from 255 the image
          outimage[i][j] = 255 - image1[i][j];
+        }
+    }
+}
+
+void Shuffle() {
+    // declaring the quarters
+    int p1,p2,p3,p4;
+    cout << "Please,Enter the number of the first quarter in the image : ";
+    //input
+    cin >> p1;
+    // if first quarter = 1
+    if ( p1 == 1 ){
+            //main for loop
+        for ( int i = 0; i<= SIZE/2 ; i++) {
+            for (int j = 0; j<=SIZE/2 ; j++) {
+                // out image = input image
+                outimage[i][j] = image1[i][j];
+            }
+        }
+    }
+        // if fisrt quarter = 2
+    else if ( p1 == 2 ){
+            // main for loop
+        for (int i = 0 ; i <= SIZE / 2 ; i++){
+            for (int j = 0; j <= SIZE / 2 ; j++){
+                        outimage[i][j] = image1[i][j + SIZE / 2];
+            }
+        }
+    }
+    // if first quarter = 3
+      else if ( p1 == 3 ){
+          // main for loop
+        for (int i = 0 ; i<=SIZE/2;i++){
+            for (int j = 0; j<=SIZE/2 ; j++){
+                        outimage[i][j] = image1[i+SIZE/2][j];
+            }
+        }
+    }
+        // if first quarter = 4
+      else if ( p1 == 4 ){
+        for (int i = 0 ; i<=SIZE/2; i++){
+            for (int j = 0; j<=SIZE/2 ; j++){
+                        outimage[i][j] = image1[i+SIZE/2][j+SIZE/2];
+            }
+        }
+    }
+
+    cout << "Please,Enter the number of the second quarter in the image: ";
+    //input second quarter
+    cin >> p2;
+            // if second quarter = 1
+    if ( p2 == 1 ){
+        for (int i = 0 ; i<=SIZE/2; i++) {
+            for (int j = SIZE/2; j<=SIZE; j++) {
+                    outimage[i][j] = image1[i][j-SIZE/2];
+            }
+        }
+    }
+            // if second quarter = 2
+    if ( p2 == 2 ){
+        for (int i = 0; i<=SIZE/2; i++) {
+            for (int j = 128; j<=SIZE; j++) {
+                    outimage[i][j] = image1[i][j];
+            }
+        }
+    }
+            // if second quarter = 3
+    else if ( p2 == 3 ){
+       for(int i = 0 ; i<=SIZE/2; i++){
+            for(int j = SIZE/2; j<=SIZE; j++){
+                        outimage[i][j] = image1[i+SIZE/2][j-SIZE/2];
+            }
+        }
+    }
+            // if second quarter = 4
+    else if ( p2 == 4 ){
+        for(int i = 0 ; i<=SIZE/2;i++){
+                for (int j = SIZE/2; j<=SIZE;j++){
+                        outimage[i][j] = image1[i+SIZE/2][j];
+                }
+            }
+        }
+
+    cout << "Please,Enter the number of the third quarter in the image: ";
+    // take the third quarter
+    cin >> p3;
+            // if third quarter = 1
+        if( p3 == 1 ){
+            for (int i = SIZE / 2; i <= SIZE; i++) {
+                for (int j = 0; j <= SIZE/2; j++) {
+                         outimage[i][j] = image1[i - SIZE / 2][j];
+                    }
+                }
+            }
+            // if third quarter = 2
+    else if ( p3 == 2 ){
+        for (int i = SIZE / 2; i <= SIZE; i++) {
+            for (int j = 0; j <= SIZE/2; j++) {
+                    outimage[i][j] = image1[i - SIZE / 2][j + SIZE / 2];
+                }
+            }
+        }
+                    // if third quarter = 3
+    else if ( p3 == 3 ){
+       for (int i = SIZE/2 ; i<=SIZE;i++){
+            for (int j = 0; j<=SIZE/2; j++){
+                        outimage[i][j] = image1[i][j];
+            }
+        }
+    }
+                // if third quarter = 4
+    else if ( p3 == 4 ){
+        for (int i = SIZE/2 ; i<=SIZE;i++){
+            for (int j = 0; j<SIZE/2; j++){
+                        outimage[i][j] = image1[i][j+SIZE/2];
+            }
+        }
+    }
+     cout << "Please,Enter the number of the fourth quarter in the image: ";
+     // take the fourth quarter
+     cin >> p4;
+                 // if fourth quarter = 1
+    if ( p4 == 1 ){
+            for (int i = SIZE/2; i<=SIZE; i++) {
+                for (int j = SIZE/2; j<=SIZE; j++){
+                            outimage[i][j] =image1[i-SIZE/2][j-SIZE/2];
+                }
+            }
+        }
+                         // if fourth quarter = 2
+    if ( p4 == 2 ){
+           for (int i = SIZE/2; i<=SIZE; i++) {
+                for (int j = SIZE/2; j<=SIZE; j++) {
+                         outimage[i][j] =image1[i-SIZE/2][j];
+                }
+            }
+        }
+                         // if fourth quarter = 3
+   if ( p4 == 3 ){
+           for (int i = SIZE/2; i<=SIZE; i++) {
+                for (int j = SIZE/2; j<=SIZE; j++) {
+                         outimage[i][j] =image1[i][j-SIZE/2];
+                }
+            }
+        }
+                         // if fourth quarter = 4
+    if ( p4 == 4 ){
+        for (int i = SIZE/2; i<=SIZE; i++) {
+            for (int j = SIZE/2; j<=SIZE; j++) {
+                    outimage[i][j] = image1[i][j];
+            }
+        }
+    }
+}
+
+
+//enlarge
+void enlarge(){
+    int quarter ;
+    //Ask ueser about qurater.
+    cout << "Please Enter the number of quarter : ";
+        //take input
+
+    cin >> quarter;
+    while (quarter != 1 & quarter != 2 & quarter != 3 & quarter != 4){
+        //defense the user from himself (taking a valid input)
+    cout << "Enter a valid input ! : ";
+    //take input
+    cin >> quarter;
+    }
+    // input the qurater.
+    if ( quarter ==  1 ){
+       //loop for qurater one.
+        for ( int  i = 0 ; i <= SIZE/2 ; i++ ){
+            for ( int  j = 0  ; j <= SIZE/2 ; j++ ){
+            //The outimage = 1 * 2 in image.
+            //code for enlarge outimage.
+                outimage[i*2][j*2] = image1[i][j];
+                outimage[i*2][j*2+1] = image1[i][j];
+                outimage[i*2+1][j*2] = image1[i][j];
+                outimage[i*2+1][j*2+1] = image1[i][j];
+            }
+        }
+    }
+    else if ( quarter  ==  2 ){
+        //loop for qurater scound.
+        for ( int  i = 0  ; i <= SIZE/2 ; i++ ){
+            for ( int j = SIZE/2  ; j <= SIZE ; j++ ){
+                //The outimage = 1 * 2 in image.
+                //code for enlarge outimage.
+                outimage[i*2][j*2] = image1[i][j];
+                outimage[i*2][j*2+1] = image1[i][j];
+                outimage[i*2+1][j*2] = image1[i][j];
+                outimage[i*2+1][j*2+1] = image1[i][j];
+            }
+        }
+    }
+    else if ( quarter  ==  3 ){
+        //loop for qurater third.
+        for  ( int  i = 0  ; i < SIZE/2 ; i++ ){
+            for  ( int  j = 0  ; j <= SIZE/2 ; j++ ){
+               //The outimage = 1 * 2 in image.
+               //code for enlarge outimage.
+                outimage[i*2][j*2] = image1[i+127][j];
+                outimage[i*2][j*2+1] = image1[i+127][j];
+                outimage[i*2+1][j*2] = image1[i+127][j];
+                outimage[i*2+1][j*2+1] = image1[i+127][j];
+            }
+        }
+    }
+    else if ( quarter  ==  4 ){
+        //loop for qurater fourth.
+        for  ( int  i = 0  ; i < SIZE/2 ; i++ ){
+            for  ( int  j = SIZE/2  ; j <SIZE ; j++ ){
+                //The outimage = 1 * 2 in image.
+                //code for enlarge outimage.
+                outimage[i*2][j*2] = image1[i+127][j];
+                outimage[i*2][j*2+1] = image1[i+127][j];
+                outimage[i*2+1][j*2] = image1[i+127][j];
+                outimage[i*2+1][j*2+1] = image1[i+127][j];
+            }
+        }
+    }
+}
+
+
+//merge
+void merger(){
+        for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j< SIZE; j++) {
+   // using it to merge the image and take the average
+            outimage[i][j] = (image1[i][j] + image2[i][j]) / 2;
+
         }
     }
 }
